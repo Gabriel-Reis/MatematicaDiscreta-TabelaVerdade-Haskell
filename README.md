@@ -1,0 +1,1 @@
+# MatematicaDiscreta-TabelaVerdade-Haskell
