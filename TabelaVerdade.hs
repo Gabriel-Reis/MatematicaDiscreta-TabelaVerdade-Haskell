@@ -1,4 +1,5 @@
 -- Gabriel Augusto Requena dos Reis - 16.2.8105
+-- Bruno César Cota Conceição - 13.2.8514
 import System.IO
 import Data.List
 
@@ -13,9 +14,21 @@ data Formula = Lit Bool
 type Contexto = [(String, Bool)]
 type TabelaVerdade = [(Contexto, Bool)]
 
+-- Princpipais funções
+-- avalia (Avaia uma formula dado um contexto)
+-- truthTable (Retorna uma tabela verdade a partir de uma fórmula) -- Não Formatada
+-- imprimiTabela (Imprime tabela formatada no console)
+-- tautologia (retorna se formula é tautologia)
+-- contradicao (retorna de sórmula é contradição)
+-- traduzForm (Exibe fórmula de modo legível)
+-- html (Gera arquivo .html na pasta onde o código fonte foi executado, caso seja executado 
+--      diretamente pelo ghci, estará na pasta padrão do mesmo. )
+-- main (seleciona menu de opções) (entrada da fórmula via console não disponível)
+
 -- -- -- -- -- -- -- -- -- -- -- -- -- --Avalia a Fórmula-- -- -- -- -- -- -- -- -- -- -- -- -- --
 -- Defina a funcao avaliar que dado uma formula e um contexto
 -- diz qual o resultado da formula nesse contexto
+-- exemplo: avalia [("A",True),("B",False)] (E (Var "A") (Var "B"))
 avalia :: Contexto -> Formula -> Bool
 avalia contex (Var str) = recContexto contex str
 avalia contex (Lit f) = f
@@ -117,10 +130,10 @@ linhaTabela (((_,bl):xs),bol)
 --Gatilho para imprimir (arquivo) HTML da Tabela
 html :: Formula -> IO()
 html fr = do
-    arq <- openFile "teste.html" WriteMode
+    arq <- openFile "tabelaVerdade.html" WriteMode
     hPutStr arq (tabelaHTML fr )
     putStrLn "Arquivo html gerado com sucesso na pasta fonte desse programa Haskell"
-    putStrLn "**O conteúdo do .html pode demorar alguns segundos para aparecer no arquivo"
+    putStrLn "**O conteúdo do .html pode demorar para aparecer no arquivo"
 
 --Gatilho para imprimir HTML com dados base da tabela HTML
 tabelaHTML :: Formula -> String
@@ -186,7 +199,7 @@ main = do
 
 -- Lista de EXTRAS
 -- FEITO    (+0,5) Faca uma funcao que dado uma formula escreva toda a tabela verdade em HTML.
---          (+0,5) Faca a funcao main :: IO () que seja um menu que o usuario passa a formula e,
+-- entrada? (+0,5) Faca a funcao main :: IO () que seja um menu que o usuario passa a formula e,
 --              em seguida, seja capaz de realizar as operacoes de avaliar (recebe um contexto),
 --              criar uma tabela verdade.
 --          (+1,0) Dado um arquivo escrito de forma como escrevemos (“A ou B e C e Verdadeiro”), 
